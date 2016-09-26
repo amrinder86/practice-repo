@@ -48,8 +48,20 @@ puts "          Hey #{@name}, Nice to meet you :) \n
 ********************************************************"
 end
 def full_info(db)
-  db.execute("SELECT stocks2.company_name,stocks2.stock_ticker,stocks2.stock_price,stocks2.recommendation_id, stocks1.recommendation FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
+  info = db.execute("SELECT stocks2.company_name,stocks2.stock_ticker,stocks2.stock_price,stocks1.recommendation  FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
   puts ""
+  p info
+  info.each do |category|
+    puts "
+          Company Name : #{category['company_name']} 
+          Stock Ticker : #{category['stock_ticker']}
+          Stock Price  : #{category['stock_price']}
+          Rating       : #{category['recommendation']}"
+  
+  end
+
+  
+
 end
 
 
@@ -72,11 +84,11 @@ puts"What would you like to do first.Select number from below:\n
 4 - View stock rating by stock ticker.
 5 - View stocks by certain price.
 6 - View all stock in database with full information."
-input = gets.chomp
+input = gets.chomp.to_i
 
 if input == 1
 elsif input == 6
-  full_info
+ full_info(db)
 else 
   puts "#{name}!!!!!Don't sleep on the job!!! PAY ATTENTION!!!!"
 end
