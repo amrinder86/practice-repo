@@ -27,12 +27,18 @@ db.execute(create_table_stocks2)
 def stocks1_category(db,category)
   db.execute("INSERT INTO stocks1 (recommendation) VALUES (?)",[category])
 end
-def stocks2_category(db,category)
-  db.execute("INSERT INTO stocks1 (recommendation) VALUES (?)",[category])
+def stocks2_category(db,company,ticker,price,exchange,recomm)
+  db.execute("INSERT INTO stocks2 (company_name,
+    stock_ticker,
+    stock_price,
+    stock_exchange,
+    recommendation_id) VALUES (?,?,?,?,?)",[company,ticker,price,exchange,recomm])
 end
 
 #driver code
 #these 3 are categories are mandatory for a firm to rate a stock!
-stocks1_category(db,"BUY")
-stocks1_category(db,"HOLD")
-stocks1_category(db,"SELL")
+# stocks1_category(db,"BUY")
+# stocks1_category(db,"HOLD")
+# stocks1_category(db,"SELL")
+# stocks2_category(db,"Apple Inc.","AAPL",112.71,"NASDAQ",1)
+
