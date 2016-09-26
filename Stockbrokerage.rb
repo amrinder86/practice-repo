@@ -122,6 +122,7 @@ def full_info(db)
 puts "Please enter your name to start using software:"
 name=gets.chomp
 introduction(name)
+loop do
 
 puts""
 puts"What would you like to do first.Select number from below:\n
@@ -130,8 +131,10 @@ puts"What would you like to do first.Select number from below:\n
 3 - Remove a stock from Database.
 4 - View stock rating by stock ticker.
 5 - View stocks by certain price.
-6 - View all stock in database with full information."
+6 - View all stock in database with full information.
+7 - Type 'done' or 7 to exit."
 input = gets.chomp.to_i
+break if input == 7 || 'done'
 
 if input == 1
   puts "What is company's name?"
@@ -146,8 +149,11 @@ if input == 1
   type 1 for BUY
   type 2 for HOLD
   type 3 for SELL "
-  # # while response1 == 1 || 2 || 3
+  # response1 = gets.chomp.to_i
+  # loop do 
+  # if  response1 == 1 || 2 || 3
   recomm=gets.chomp.to_i
+  # break
   # else 
   #   puts"Pay Attention!!!
   #   type 1, 2 or 3"
@@ -218,4 +224,5 @@ elsif input == 6
  full_info(db)
 else 
   puts "#{name}!!!!!Don't sleep on the job!!! PAY ATTENTION!!!!"
+end
 end
