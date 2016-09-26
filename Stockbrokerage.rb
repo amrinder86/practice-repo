@@ -92,6 +92,22 @@ if input == 1
   company = gets.chomp
   puts "What is stock's ticker symbol on exchange?"
   ticker = gets.chomp
+  puts "What is stock's price at the moment?"
+  price = gets.chomp.to_i
+  puts "What stock exchange the stock trades on like 'NYSE' 'NASDAQ' etc."
+  exchange=gets.chomp
+  puts "What rating would you recommend for this stock?\n
+  type 1 for BUY
+  type 2 for SELL
+  type 3 for HOLD "
+  # # while response1 == 1 || 2 || 3
+  recomm=gets.chomp.to_i
+  # else 
+  #   puts"Pay Attention!!!
+  #   type 1, 2 or 3"
+  # end
+
+
   stocks2_category(db,company,ticker,price,exchange,recomm)
 
 elsif input == 2
