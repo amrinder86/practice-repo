@@ -73,21 +73,31 @@ def full_info(db)
   
   end
   end
-  
-#   def less_info(db)
-#      info = db.execute("SELECT stocks2.stock_ticker,stocks1.recommendation FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
-#   puts ""
-#   p info
-#   info.each do |category|
-#     puts " 
-#           Stock Ticker : #{category['stock_ticker']}
-#           Rating       : #{category['recommendation']}"
-#         end
-  
+  # View stock rating by stock ticker.
+  def stock_rating_by_ticker(db,stock_ticker)
+    info =db.execute(<<-SQL
+    SELECT  stocks1.recommendation FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id Where stock_ticker="#{stock_ticker}";
+    SQL
+    )
+     info
+    info.each do |category|
+    puts " 
+          Rating       : #{category['recommendation']}"
+        end
 
-  
 
-# end
+  end
+
+  def less_info(db)
+     info = db.execute("SELECT stocks2.stock_ticker,stocks1.recommendation FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
+  puts ""
+  p info
+  info.each do |category|
+    puts " 
+          Stock Ticker : #{category['stock_ticker']}
+          Rating       : #{category['recommendation']}"
+        end
+  end
 
 
 #driver code
@@ -176,6 +186,14 @@ elsif input == 3
   remove_stock(db,stock_ticker)
 
   elsif input == 4
+    puts "Which stock's Rating you need to check?"
+
+    less_info(db)
+    puts "Enter Stock Ticker:"
+
+    stock_ticker=gets.chomp
+    stock_rating_by_ticker(db,stock_ticker)
+    
     elsif input == 5
     
 
