@@ -82,9 +82,21 @@ def full_info(db)
      info
     info.each do |category|
     puts " 
-          Rating       : #{category['recommendation']}"
+          Rating : #{category['recommendation']}"
         end
 
+
+  end
+  def stock_by_price(db,price)
+    info =db.execute(<<-SQL
+    SELECT  stocks2.stock_ticker FROM stocks2 Where stock_price >"#{price}";
+    SQL
+    )
+     info
+    info.each do |category|
+    puts " 
+      Stock Ticker : #{category['stock_ticker']}"
+        end
 
   end
 
@@ -195,6 +207,11 @@ elsif input == 3
     stock_rating_by_ticker(db,stock_ticker)
     
     elsif input == 5
+      # View stocks by certain price.
+      puts "Enter price to see all stocks above that price."
+      price=gets.chomp.to_i
+      stock_by_price(db,price)
+
     
 
 elsif input == 6
