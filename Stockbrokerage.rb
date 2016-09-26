@@ -61,15 +61,16 @@ def remove_stock(db,stock_ticker)
     )
 end
 def full_info(db)
-  info = db.execute("SELECT stocks2.company_name,stocks2.stock_ticker,stocks2.stock_price,stocks1.recommendation  FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
+  info = db.execute("SELECT stocks2.company_name,stocks2.stock_ticker,stocks2.stock_price,stocks2.stock_exchange,stocks1.recommendation  FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
   puts ""
   p info
   info.each do |category|
     puts "
-          Company Name : #{category['company_name']} 
-          Stock Ticker : #{category['stock_ticker']}
-          Stock Price  : #{category['stock_price']}
-          Rating       : #{category['recommendation']}"
+          Company Name  : #{category['company_name']} 
+          Stock Ticker  : #{category['stock_ticker']}
+          Stock Price   : #{category['stock_price']}
+          Stock Exchange: #{category['stock_exchange']}
+          Rating        : #{category['recommendation']}"
   
   end
   end
@@ -89,13 +90,14 @@ def full_info(db)
   end
   def stock_by_price(db,price)
     info =db.execute(<<-SQL
-    SELECT  stocks2.stock_ticker FROM stocks2 Where stock_price >"#{price}";
+    SELECT  stocks2.stock_ticker stocks2.stock_price FROM stocks2 Where stock_price >"#{price}";
     SQL
     )
-     info
+     
     info.each do |category|
     puts " 
-      Stock Ticker : #{category['stock_ticker']}"
+      Stock Ticker : #{category['stock_ticker']}
+      Stock Price  : #{category['stock_price']}"
         end
 
   end
@@ -103,7 +105,7 @@ def full_info(db)
   def less_info(db)
      info = db.execute("SELECT stocks2.stock_ticker,stocks1.recommendation FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
   puts ""
-  p info
+ 
   info.each do |category|
     puts " 
           Stock Ticker : #{category['stock_ticker']}
@@ -125,22 +127,22 @@ introduction(name)
 loop do
 
 puts""
-puts"What would you like to do first.Select number from below:\n
+puts"What would you like to do.Select number from below:\n
 1 - Add a stock rating to Database.
 2 - Update a stock rating in Database.
 3 - Remove a stock from Database.
 4 - View stock rating by stock ticker.
 5 - View stocks by certain price.
 6 - View all stock in database with full information.
-7 - Type 'done' or 7 to exit."
+7 - EXIT"
 input = gets.chomp.to_i
-break if input == 7 || 'done'
+break if input == 7 
 
 if input == 1
   puts "What is company's name?"
   company = gets.chomp
   puts "What is stock's ticker symbol on exchange?"
-  ticker = gets.chomp
+  ticker = gets.chomp.upcase
   puts "What is stock's price at the moment?"
   price = gets.chomp.to_i
   puts "What stock exchange the stock trades on like 'NYSE' 'NASDAQ' etc."
@@ -164,16 +166,17 @@ if input == 1
 
 elsif input == 2
   # 2 - Update a stock rating in Database.
-  puts "Which stock's rating would you like to Update?"
-  info = db.execute("SELECT stocks2.stock_ticker,stocks1.recommendation FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
-  puts ""
-  p info
-  info.each do |category|
-    puts " 
-          Stock Ticker : #{category['stock_ticker']}
-          Rating       : #{category['recommendation']}"
+  less_info(db)
+  # puts "Which stock's rating would you like to Update?"
+  # info = db.execute("SELECT stocks2.stock_ticker,stocks1.recommendation FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
+  # puts ""
+  # p info
+  # info.each do |category|
+  #   puts " 
+  #         Stock Ticker : #{category['stock_ticker']}
+  #         Rating       : #{category['recommendation']}"
   
-  end
+  # end
   
   puts "Enter Stock Ticker:"
   stock_ticker = gets.chomp.upcase.to_s
@@ -209,7 +212,8 @@ elsif input == 3
     less_info(db)
     puts "Enter Stock Ticker:"
 
-    stock_ticker=gets.chomp
+    stock_ticker=gets.chomp.upcase
+
     stock_rating_by_ticker(db,stock_ticker)
     
     elsif input == 5
@@ -223,6 +227,7 @@ elsif input == 3
 elsif input == 6
  full_info(db)
 else 
-  puts "#{name}!!!!!Don't sleep on the job!!! PAY ATTENTION!!!!"
+  puts "#{name}!!!!!Don't sleep on the job!!! PAY ATTENTION!!!!
+  pick a number from 1 to 7."
 end
 end
