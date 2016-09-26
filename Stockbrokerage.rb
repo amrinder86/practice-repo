@@ -59,7 +59,7 @@ def remove_stock(db,stock_ticker)
     DELETE FROM stocks2 Where stock_ticker="#{stock_ticker}";
     SQL
     )
-
+end
 def full_info(db)
   info = db.execute("SELECT stocks2.company_name,stocks2.stock_ticker,stocks2.stock_price,stocks1.recommendation  FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
   puts ""
@@ -72,10 +72,22 @@ def full_info(db)
           Rating       : #{category['recommendation']}"
   
   end
+  end
+  
+#   def less_info(db)
+#      info = db.execute("SELECT stocks2.stock_ticker,stocks1.recommendation FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
+#   puts ""
+#   p info
+#   info.each do |category|
+#     puts " 
+#           Stock Ticker : #{category['stock_ticker']}
+#           Rating       : #{category['recommendation']}"
+#         end
+  
 
   
 
-end
+# end
 
 
 #driver code
@@ -148,6 +160,21 @@ elsif input == 2
   p update_rating(db,stock_ticker,rating)
 
 elsif input == 3
+  puts "Which stock you want to remove from database?"
+    info = db.execute("SELECT stocks2.stock_ticker,stocks1.recommendation FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
+  puts ""
+  p info
+  info.each do |category|
+    puts " 
+          Stock Ticker : #{category['stock_ticker']}
+          Rating       : #{category['recommendation']}"
+  
+  end
+  puts "Enter Stock Ticker To Remove:"
+  stock_ticker=gets.chomp.upcase
+
+  remove_stock(db,stock_ticker)
+
   elsif input == 4
     elsif input == 5
     
