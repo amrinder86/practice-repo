@@ -47,6 +47,7 @@ puts "          Hey #{@name}, Nice to meet you :) \n
 * make sure you give your 100 PERCENT on the job.      *\n
 ********************************************************"
 end
+
 def full_info(db)
   info = db.execute("SELECT stocks2.company_name,stocks2.stock_ticker,stocks2.stock_price,stocks1.recommendation  FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
   puts ""
@@ -87,6 +88,18 @@ puts"What would you like to do first.Select number from below:\n
 input = gets.chomp.to_i
 
 if input == 1
+  puts "What is company's name?"
+  company = gets.chomp
+  puts "What is stock's ticker symbol on exchange?"
+  ticker = gets.chomp
+  stocks2_category(db,company,ticker,price,exchange,recomm)
+
+elsif input == 2
+elsif input == 3
+  elsif input == 4
+    elsif input == 5
+    
+
 elsif input == 6
  full_info(db)
 else 
