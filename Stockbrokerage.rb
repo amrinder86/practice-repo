@@ -39,6 +39,9 @@ def stocks2_category(db,company,ticker,price,exchange,recomm)
     stock_price,
     stock_exchange,
     recommendation_id) VALUES (?,?,?,?,?)",[company,ticker,price,exchange,recomm])
+  puts "==========================================="
+  puts "#{ticker} has been added to the database."
+  puts "==========================================="
 end
 
 def introduction(name)
@@ -60,7 +63,7 @@ def update_rating (db,stock_ticker,rating)
     Where stock_ticker="#{stock_ticker}";
     SQL
   )
- 
+ puts "#{stock_ticker} has been changed to '#{rating}'"
 end
 # remove a stock from database
 def remove_stock(db,stock_ticker)
@@ -69,6 +72,9 @@ def remove_stock(db,stock_ticker)
     Where stock_ticker="#{stock_ticker}";
     SQL
   )
+  puts "==================================================="
+  puts "#{stock_ticker} has been removed from the database."
+  puts "==================================================="
 end
 # display all stock info 
 def full_info(db)
@@ -94,23 +100,27 @@ def stock_rating_by_ticker(db,stock_ticker)
     Where stock_ticker="#{stock_ticker}";
     SQL
     )
+    puts "==========================================="
     info.each do |category|
     puts " 
           Rating : #{category['recommendation']}"
         end
+    puts "==========================================="
 end
 # view stocks by certain price 
 def stock_by_price(db,price)
     info =db.execute(<<-SQL
-    SELECT  stocks2.stock_ticker stocks2.stock_price FROM stocks2 Where stock_price >"#{price}";
+    SELECT  stocks2.stock_ticker, stocks2.stock_price FROM stocks2 Where stock_price >"#{price}";
     SQL
     )
-     
+    puts "These follwing stocks are above $#{price}."
+    puts "==========================================="
     info.each do |category|
     puts " 
       Stock Ticker : #{category['stock_ticker']}
       Stock Price  : #{category['stock_price']}"
         end
+    puts "==========================================="
 
 end
 # method to display less info about each stock.
