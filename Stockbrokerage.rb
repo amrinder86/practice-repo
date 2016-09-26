@@ -1,3 +1,5 @@
+# disclaimer : None of the recommendations made in this program are valid.Please don't buy stocks on this #recommendation.Thanks :) 
+
 require 'sqlite3'
 
 db = SQLite3::Database.new("stockbrokerage.db")
@@ -194,8 +196,12 @@ elsif input == 3
 
 elsif input == 4
     puts "Which stock's Rating you need to check?"
-
-    less_info(db)
+    info = db.execute("SELECT stocks2.stock_ticker FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
+   
+     info.each do |category|
+      puts " 
+          Stock Ticker : #{category['stock_ticker']}"
+        end
     puts "Enter Stock Ticker:"
 
     stock_ticker=gets.chomp.upcase
