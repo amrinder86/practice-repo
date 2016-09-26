@@ -48,11 +48,11 @@ puts "          Hey #{@name}, Nice to meet you :) \n
 ********************************************************"
 end
 def update_rating (db,stock_ticker,rating)
-  db.execute( <<-SQL
-    
-    UPDATE stocks2 SET recommendation_id="#{rating}" Where stock_ticker="stock_ticker";
+  info = db.execute(<<-SQL
+    UPDATE stocks2 SET recommendation_id="#{rating}" Where stock_ticker="#{stock_ticker}";
     SQL
     )
+ p info
 end
 
 def full_info(db)
@@ -105,8 +105,8 @@ if input == 1
   exchange=gets.chomp
   puts "What rating would you recommend for this stock?\n
   type 1 for BUY
-  type 2 for SELL
-  type 3 for HOLD "
+  type 2 for HOLD
+  type 3 for SELL "
   # # while response1 == 1 || 2 || 3
   recomm=gets.chomp.to_i
   # else 
@@ -131,14 +131,16 @@ elsif input == 2
   end
   
   puts "Enter Stock Ticker:"
-  stock_ticker = gets.chomp
+  stock_ticker = gets.chomp.upcase.to_s
+  p stock_ticker
   puts "What is your updated rating 
   type 1 for BUY
-  type 2 for SELL
-  type 3 for HOLD"
-  rating = gets.chomp
+  type 2 for HOLD
+  type 3 for SELL"
+  rating = gets.chomp.to_i
+  p rating 
 
-  update_rating(db,stock_ticker,rating)
+  p update_rating(db,stock_ticker,rating)
 
 elsif input == 3
   elsif input == 4
