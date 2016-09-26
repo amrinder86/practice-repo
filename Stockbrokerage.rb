@@ -1,5 +1,7 @@
 require 'sqlite3'
+
 db = SQLite3::Database.new("stockbrokerage.db")
+db.results_as_hash = true
 
 create_table_stocks1 = <<-SQL
   CREATE TABLE IF NOT EXISTS stocks1(
