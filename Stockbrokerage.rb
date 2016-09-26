@@ -23,3 +23,16 @@ create_table_stocks2 =  <<-SQL
 SQL
 
 db.execute(create_table_stocks2)
+
+def stocks1_category(db,category)
+  db.execute("INSERT INTO stocks1 (recommendation) VALUES (?)",[category])
+end
+def stocks2_category(db,category)
+  db.execute("INSERT INTO stocks1 (recommendation) VALUES (?)",[category])
+end
+
+#driver code
+#these 3 are categories are mandatory for a firm to rate a stock!
+stocks1_category(db,"BUY")
+stocks1_category(db,"HOLD")
+stocks1_category(db,"SELL")
