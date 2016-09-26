@@ -47,6 +47,13 @@ puts "          Hey #{@name}, Nice to meet you :) \n
 * make sure you give your 100 PERCENT on the job.      *\n
 ********************************************************"
 end
+def update_rating (db,stock_ticker,rating)
+  db.execute( <<-SQL
+    
+    UPDATE stocks2 SET recommendation_id="#{rating}" Where stock_ticker="stock_ticker";
+    SQL
+    )
+end
 
 def full_info(db)
   info = db.execute("SELECT stocks2.company_name,stocks2.stock_ticker,stocks2.stock_price,stocks1.recommendation  FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
@@ -111,6 +118,28 @@ if input == 1
   stocks2_category(db,company,ticker,price,exchange,recomm)
 
 elsif input == 2
+  # 2 - Update a stock rating in Database.
+  puts "Which stock's rating would you like to Update?"
+  info = db.execute("SELECT stocks2.stock_ticker,stocks1.recommendation FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
+  puts ""
+  p info
+  info.each do |category|
+    puts " 
+          Stock Ticker : #{category['stock_ticker']}
+          Rating       : #{category['recommendation']}"
+  
+  end
+  
+  puts "Enter Stock Ticker:"
+  stock_ticker = gets.chomp
+  puts "What is your updated rating 
+  type 1 for BUY
+  type 2 for SELL
+  type 3 for HOLD"
+  rating = gets.chomp
+
+  update_rating(db,stock_ticker,rating)
+
 elsif input == 3
   elsif input == 4
     elsif input == 5
