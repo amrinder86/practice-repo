@@ -48,12 +48,17 @@ puts "          Hey #{@name}, Nice to meet you :) \n
 ********************************************************"
 end
 def update_rating (db,stock_ticker,rating)
-  info = db.execute(<<-SQL
+   db.execute(<<-SQL
     UPDATE stocks2 SET recommendation_id="#{rating}" Where stock_ticker="#{stock_ticker}";
     SQL
     )
- p info
+ 
 end
+def remove_stock(db,stock_ticker)
+  db.execute(<<-SQL
+    DELETE FROM stocks2 Where stock_ticker="#{stock_ticker}";
+    SQL
+    )
 
 def full_info(db)
   info = db.execute("SELECT stocks2.company_name,stocks2.stock_ticker,stocks2.stock_price,stocks1.recommendation  FROM stocks2 JOIN stocks1 ON stocks2.recommendation_id = stocks1.id;")
